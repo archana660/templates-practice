@@ -1,0 +1,24 @@
+stages:
+  - stage: terraformplan
+    displayName: Terraform Plan
+    jobs:
+      - job: 
+        steps:
+      
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+            backendServiceArm: 'grv-svc01'
+            backendAzureRmStorageAccountName: 'stgrvhomerenovation'
+            backendAzureRmContainerName: 'grvcontainer'
+            backendAzureRmKey: 'dev.tfstate'
+
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+            environmentServiceNameAzureRM: 'grv-svc01'
